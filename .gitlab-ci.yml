@@ -1,6 +1,7 @@
 stages:
   - build
   - test 
+  - push
 
 variables:
   DOCKER_HOST: tcp://docker:2375/
@@ -31,7 +32,7 @@ build_image:
 #        - build_image
 #      script:
 #        - docker load -i $IMAGE_TAR
- #       - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
+#       - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
 
 push_image:
   image: docker:24.0.2
