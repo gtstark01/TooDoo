@@ -1,0 +1,22 @@
+stages:
+  - build
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  IMAGE_NAME: nobupyra
+  IMAGE_TAR: $IMAGE_NAME.tar
+
+build_image:
+  image: docker:24.0.2
+  services:
+    - docker:24.0.2-dind
+  stage: build
+  script:
+    - docker info
+    - docker build -t $IMAGE_NAME:latest .
+    - docker save $IMAGE_NAME:latest -o $IMAGE_TAR
+  artifacts:
+    paths:
+      - $IMAGE_TAR
+    expire_in: 1 day  # Optional: auto-clean after 24 hours
