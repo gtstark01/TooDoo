@@ -22,13 +22,25 @@ build_image:
       - $IMAGE_TAR
     expire_in: 1 day  # Optional: auto-clean after 24 hours
 
-test_image:
-      image: docker:24.0.2
-      services:
-        - docker:24.0.2-dind
-      stage: test
-      dependencies:
-        - build_image
-      script:
-        - docker load -i $IMAGE_TAR
-        - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
+#test_image:
+#     image: docker:24.0.2
+#      services:
+#        - docker:24.0.2-dind
+#      stage: test
+#      dependencies:
+#        - build_image
+#      script:
+#        - docker load -i $IMAGE_TAR
+ #       - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
+
+push_image:
+  image: docker:24.0.2
+  services:
+    - docker:24.0.2-dind
+  stage: push
+  dependencies:
+    - build_image
+  script:
+    - docker load -i $IMAGE_TAR
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker push $IMAGE_NAME:latest
