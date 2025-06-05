@@ -31,4 +31,4 @@ test_image:
         - build_image
       script:
         - docker load -i $IMAGE_TAR
-        - docker run --rm --entrypoint cat $IMAGE_NAME:latest /go/src/tasky/wizexercise.txt
+        - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
