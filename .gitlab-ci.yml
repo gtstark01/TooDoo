@@ -43,5 +43,6 @@ push_image:
     - build_image
   script:
     - docker load -i $IMAGE_TAR
+    - docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
     - echo "$DOCKERHUB_ACCESS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
     - docker push $IMAGE_NAME:latest
