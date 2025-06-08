@@ -48,12 +48,11 @@ variables:
 
 deploy:
   stage: deploy
-  image: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
 #  dependencies:
 #    - build_image
   before_script:
     - echo "$GCP_SA_KEY" | base64 -d > /tmp/account.json
-    - cat /tmp/account.json
     - gcloud auth activate-service-account --key-file /tmp/account.json
     - gcloud container clusters get-credentials testbed --zone $GCP_ZONE --project $GCP_PROJECT_ID
   script:
