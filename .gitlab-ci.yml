@@ -2,6 +2,7 @@ stages:
   - build
   - test 
   - push
+  - deploy
 
 variables:
   IMAGE_NAME: testy
@@ -44,3 +45,16 @@ push_image:
     - docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
     - echo "$DOCKERHUB_ACCESS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
     - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+
+deploy:
+  stage: deploy
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+  dependencies:
+    - build_image
+  before_script:
+    - echo "$GCP_SA_KEY" > /tmp/account.json
+    - gcloud auth activate-service-account --key-file /tmp/account.json
+    - gcloud container clusters get-credentials testbed --zone $GCP_ZONE --project $GCP_PROJECT_ID
+  script:
+    - sed -i "s|image:.*|image: $IMAGE|" k8s/testydeploy.yaml 
+    - kubectl apply -f Manifests/
