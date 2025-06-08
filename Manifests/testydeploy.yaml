@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testy
+  template:
+    metadata:
+      labels:
+        app: testy
+    spec:
+      serviceAccountName: testy-admin
+      containers:
+        - name: tasky
+          image: gtstark07/testy:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: tasky-secrets
+                  key: MONGODB_URI
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tasky-secrets
+                  key: SECRET_KEY
