@@ -49,8 +49,8 @@ variables:
 deploy:
   stage: deploy
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
-  dependencies:
-    - build_image
+#  dependencies:
+#    - build_image
   before_script:
     - echo "$GCP_SA_KEY" | base64 -d > /tmp/account.json
     - cat /tmp/account.json
