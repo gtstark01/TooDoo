@@ -2,7 +2,13 @@ provider "google" {
   project = var.project_id
   region  = var.region
   zone    = var.zone
-  test    = var.repo
+}
+
+terraform {
+  backend "gcs" {
+    bucket  = "bigbucketofcrabs99"
+    prefix  = "terraform/state"
+  }
 }
 
 resource "google_compute_network" "default" {
