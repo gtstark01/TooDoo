@@ -4,8 +4,8 @@ include:
 
 stages:
   - terraform
+  - trigger
   - build
   - test
   - push
   - deploy
-  - trigger
