@@ -18,15 +18,12 @@ terraform:
     - terraform init -input=false
     - terraform plan -out=tfplan
     - terraform apply -auto-approve tfplan
-    # notify app pipeline to run
-    - echo "trigger_app=true" > ../infra-change.env
-  artifacts:
-    paths:
-      - infra-change.env
-    expire_in: 1 hour
 
 trigger_app:
   stage: trigger
-  script: echo "Triggering app pipeline..."
   trigger:
     include: ci/app.gitlab-ci.yml
+    strategy: depend  # Optional: waits for downstream pipeline to finish
+  rules:
+    - changes:
+        - infra/**/*     # Run only when infra changes
