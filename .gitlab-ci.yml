@@ -1,3 +1,11 @@
 include:
   - local: 'ci/infra.gitlab-ci.yaml'
   - local: 'ci/app.gitlab-ci.yml'
+
+stages:
+  - terraform
+  - build
+  - test
+  - push
+  - deploy
+  - trigger
