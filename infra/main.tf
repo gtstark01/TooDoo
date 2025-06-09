@@ -2,6 +2,7 @@ provider "google" {
   project = var.project_id
   region  = var.region
   zone    = var.zone
+  test    = var.repo
 }
 
 resource "google_compute_network" "default" {
