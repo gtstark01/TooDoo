@@ -4,7 +4,7 @@ stages:
 
 terraform:
   stage: terraform
-  image: google/cloud-sdk:slim
+  image: cedricguadalupe/terraform-gcloud
   rules:
     - changes:
         - infra/**/*
