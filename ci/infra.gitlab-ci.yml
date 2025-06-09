@@ -1,0 +1,25 @@
+stages:
+  - terraform
+
+terraform:
+  stage: terraform
+  image: google/cloud-sdk:slim
+  rules:
+    - changes:
+        - infra/**/*
+  before_script:
+    - echo "$GCP_SA_KEY_BASE64" | base64 -d > /tmp/gcp-key.json
+    - gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+    - gcloud config set project "$GCP_PROJECT_ID"
+    - gcloud config set compute/zone "$GCP_ZONE"
+  script:
+    - cd infra
+    - terraform init -input=false
+    - terraform plan -out=tfplan
+    - terraform apply -auto-approve tfplan
+    # notify app pipeline to run
+    - echo "trigger_app=true" > ../infra-change.env
+  artifacts:
+    paths:
+      - infra-change.env
+    expire_in: 1 hour
