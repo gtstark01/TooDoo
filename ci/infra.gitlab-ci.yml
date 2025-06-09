@@ -1,5 +1,6 @@
 stages:
   - terraform
+  - trigger
 
 terraform:
   stage: terraform
@@ -23,3 +24,9 @@ terraform:
     paths:
       - infra-change.env
     expire_in: 1 hour
+
+trigger_app:
+  stage: trigger
+  script: echo "Triggering app pipeline..."
+  trigger:
+    include: ci/app.gitlab-ci.yml
