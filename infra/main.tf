@@ -70,6 +70,10 @@ resource "google_container_cluster" "default" {
    cidr_block   = "72.198.103.130/32"
    display_name = "home"
  }
+  cidr_blocks {
+    cidr_block = "35.192.0.0/14"
+    display_name = "GCP Compute"
+  }
 }
 }
 
