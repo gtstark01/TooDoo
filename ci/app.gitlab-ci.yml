@@ -1,0 +1,60 @@
+stages:
+  - build
+  - test 
+  - push
+  - deploy
+
+variables:
+  IMAGE_NAME: testy
+  IMAGE_TAR: $IMAGE_NAME.tar
+
+#build_image:
+#  image: docker:24.0.2
+#  services:
+#    - docker:24.0.2-dind
+#  stage: build
+#  script:
+#    - docker info
+#    - docker build -t $IMAGE_NAME:latest .
+#    - docker save $IMAGE_NAME:latest -o $IMAGE_TAR
+#  artifacts:
+#    paths:
+#      - $IMAGE_TAR
+#    expire_in: 1 day  # Optional: auto-clean after 24 hours
+
+#test_image:
+#     image: docker:24.0.2
+#      services:
+#        - docker:24.0.2-dind
+#      stage: test
+#      dependencies:
+#        - build_image
+#      script:
+#        - docker load -i $IMAGE_TAR
+#       - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
+
+#push_image:
+#  image: docker:24.0.2
+#  services:
+#    - docker:24.0.2-dind
+#  stage: push
+#  dependencies:
+#    - build_image
+#  script:
+#    - docker load -i $IMAGE_TAR
+#    - docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+#    - echo "$DOCKERHUB_ACCESS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+#    - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+
+deploy:
+  stage: deploy
+  image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
+#  dependencies:
+#    - build_image
+  before_script:
+    - echo "$GCP_SA_KEY" | base64 -d > /tmp/account.json
+    - gcloud auth activate-service-account --key-file /tmp/account.json
+    - gcloud container clusters get-credentials testbed --zone $GCP_ZONE --project $GCP_PROJECT_ID
+  script:
+    - kubectl apply -f Manifests/
+
