@@ -8,7 +8,7 @@ stages:
   - terraform
   - trigger
   - build
-  - container_scanning
+  - container_scan
   - test
   - push
   - deploy
