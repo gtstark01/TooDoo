@@ -2,6 +2,9 @@ variables:
   IMAGE_NAME: testy
   IMAGE_TAR: $IMAGE_NAME.tar
 
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
 build_image:
   image: docker:24.0.2
   services:
@@ -15,19 +18,6 @@ build_image:
     paths:
       - $IMAGE_TAR
     expire_in: 1 day  # Optional: auto-clean after 24 hours
-
-scan_local_image:
-  stage: container_scan
-  image: aquasec/trivy:latest
-  script:
-    - trivy image --input $IMAGE_TAR --format json --output trivy-report.json
-  artifacts:
-    paths:
-      - trivy-report.json
-    reports:
-      container_scanning: trivy-report.json
-  dependencies:
-    - build_image
 
 #test_image:
 #     image: docker:24.0.2
