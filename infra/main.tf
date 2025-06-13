@@ -196,7 +196,7 @@ resource "google_compute_firewall" "allow_public_ssh" {
 resource "google_storage_bucket" "mongo_backup_bucket" {
   name          = "mongo-backup-${var.project_id}"
   location      = "US"
-  force_destroy = true  # Optional: allows deleting even if non-empty
+  force_destroy = true  
   uniform_bucket_level_access = true
 }
 
