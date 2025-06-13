@@ -40,6 +40,7 @@ resource "google_container_cluster" "default" {
   location = "us-central1-a"
   initial_node_count = 2
   enable_l4_ilb_subsetting = true
+  deletion_protection = false
 
   network    = google_compute_network.default.id
   subnetwork = google_compute_subnetwork.default.id
