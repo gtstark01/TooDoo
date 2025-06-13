@@ -1,7 +1,7 @@
 include:
   #- local: 'ci/infra.gitlab-ci.yaml'
   - local: 'ci/app.gitlab-ci.yml'
-  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
 
 stages:
   - secret_detection
