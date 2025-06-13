@@ -130,6 +130,13 @@ resource "google_service_account" "mongo_vm_sa" {
   display_name = "Mongo VM Service Account"
 }
 
+resource "google_service_account_iam_member" "allow_infra_to_impersonate" {
+  service_account_id = google_service_account.mongo_vm_sa.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:infra-provision@${var.project_id}.iam.gserviceaccount.com"
+}
+
+
 resource "google_project_iam_member" "allow_vm_service_account_full_access" {
   project = var.project_id
   role    = "roles/editor"
