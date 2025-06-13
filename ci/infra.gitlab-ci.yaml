@@ -20,11 +20,27 @@ terraform:
     - terraform plan -out=tfplan
     - terraform apply -auto-approve tfplan
 
+destroy:
+  stage: destroy
+  image: cedricguadalupe/terraform-gcloud
+  when: manual          
+  allow_failure: false  
+  before_script:
+    - echo "$GCP_INFRA_KEY" | base64 -d > /tmp/gcp-key.json
+    - gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+    - gcloud config set project "$GCP_PROJECT_ID"
+    - gcloud config set compute/zone "$GCP_ZONE"
+    - export GOOGLE_APPLICATION_CREDENTIALS=/tmp/gcp-key.json
+  script:
+    - cd infra
+    - terraform init -input=false
+    - terraform destroy -auto-approve
+
 trigger_app:
   stage: trigger
   trigger:
     include: ci/app.gitlab-ci.yml
-    strategy: depend  # Optional: waits for downstream pipeline to finish
+    strategy: depend 
   rules:
     - changes:
-        - infra/**/*     # Run only when infra changes
+        - infra/**/*     
