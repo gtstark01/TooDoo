@@ -13,6 +13,3 @@ stages:
   - push
   - deploy
   - destroy
-
-secret_detection:
-  stage: secret_detection

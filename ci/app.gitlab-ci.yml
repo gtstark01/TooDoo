@@ -43,9 +43,6 @@ build_image:
 #    - echo "$DOCKERHUB_ACCESS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 #    - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
 
-container_scanning:
-  stage: container_scanning
-
 deploy:
   stage: deploy
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
