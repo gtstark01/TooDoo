@@ -1,7 +1,3 @@
-stages:
-  - terraform
-  - trigger
-
 terraform:
   stage: terraform
   image: cedricguadalupe/terraform-gcloud
@@ -20,6 +16,15 @@ terraform:
     - terraform plan -out=tfplan
     - terraform apply -auto-approve tfplan
 
+trigger_app:
+  stage: trigger
+  trigger:
+    include: ci/app.gitlab-ci.yml
+    strategy: depend 
+  rules:
+    - changes:
+        - infra/**/*     
+
 destroy:
   stage: destroy
   image: cedricguadalupe/terraform-gcloud
@@ -35,12 +40,3 @@ destroy:
     - cd infra
     - terraform init -input=false
     - terraform destroy -auto-approve
-
-trigger_app:
-  stage: trigger
-  trigger:
-    include: ci/app.gitlab-ci.yml
-    strategy: depend 
-  rules:
-    - changes:
-        - infra/**/*     

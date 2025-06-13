@@ -1,12 +1,18 @@
 include:
-  - local: 'ci/infra.gitlab-ci.yaml'
+  #- local: 'ci/infra.gitlab-ci.yaml'
   - local: 'ci/app.gitlab-ci.yml'
+  - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
+  - secret_detection
   - terraform
   - trigger
   - build
+  - container_scanning
   - test
   - push
   - deploy
   - destroy
+
+secret_detection:
+  stage: secret_detection
