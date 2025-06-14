@@ -1,6 +1,9 @@
 variables:
   IMAGE_NAME: testy
   IMAGE_TAR: $IMAGE_NAME.tar
+  CS_IMAGE: $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+  DOCKER_USER: $DOCKERHUB_USERNAME
+  DOCKER_PASSWORD: $DOCKERHUB_ACCESS
 
 include:
   - template: Security/Container-Scanning.gitlab-ci.yml
