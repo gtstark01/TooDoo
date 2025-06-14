@@ -51,7 +51,6 @@ resource "google_container_cluster" "default" {
     cluster_secondary_range_name  = google_compute_subnetwork.default.secondary_ip_range[1].range_name
   }
 
-  # Private cluster config - makes nodes private (no external IP)
   private_cluster_config {
     enable_private_nodes    = true
     enable_private_endpoint = false

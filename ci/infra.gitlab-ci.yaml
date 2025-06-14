@@ -20,7 +20,7 @@ trigger_app:
   stage: trigger
   trigger:
     include: ci/app.gitlab-ci.yml
-    strategy: depend #test
+    strategy: depend 
   rules:
     - changes:
         - infra/**/*     
