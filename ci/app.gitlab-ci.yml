@@ -20,7 +20,7 @@ build_image:
   artifacts:
     paths:
       - $IMAGE_TAR
-    expire_in: 1 day  # Optional: auto-clean after 24 hours
+    expire_in: 1 day  # Optional: auto-clean after 24 hour
 
 #test_image:
 #     image: docker:24.0.2
