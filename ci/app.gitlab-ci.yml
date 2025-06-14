@@ -56,5 +56,6 @@ deploy:
     - gcloud auth activate-service-account --key-file /tmp/account.json
     - gcloud container clusters get-credentials testbed --zone $GCP_ZONE --project $GCP_PROJECT_ID
   script:
+    - envsubst < Manifests/taskysecret.yaml.template > Manifests/taskysecret.yaml
     - kubectl apply -f Manifests/
 
