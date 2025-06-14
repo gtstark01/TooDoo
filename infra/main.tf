@@ -54,7 +54,7 @@ resource "google_container_cluster" "default" {
   private_cluster_config {
     enable_private_nodes    = true
     enable_private_endpoint = false
-    master_ipv4_cidr_block  = "172.16.0.16/28"  # This CIDR is used for the control plane VPC peering
+    master_ipv4_cidr_block  = "172.16.0.16/28"  # This CIDR is used for control plane VPC peering
   }
 
   workload_identity_config {
