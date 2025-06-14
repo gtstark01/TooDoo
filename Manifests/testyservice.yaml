@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: testy-service
+  labels:
+    app: testy
+spec:
+  selector:
+    app: testy
+  ports:
+    - protocol: TCP
+      port: 80        # exposed to the load balancer
+      targetPort: 8080  # your container's port
+  type: NodePort
