@@ -5,11 +5,9 @@ include:
   - template: Security/Container-Scanning.gitlab-ci.yml
 
 stages:
-  - secret_detection
   - terraform
   - trigger
   - build
-  - push
   - test
   - deploy
   - destroy

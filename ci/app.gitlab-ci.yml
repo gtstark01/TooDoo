@@ -34,7 +34,7 @@ push_image:
   image: docker:24.0.2
   services:
     - docker:24.0.2-dind
-  stage: push
+  stage: build
   dependencies:
     - build_image
   script:
@@ -47,7 +47,7 @@ deploy:
   stage: deploy
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
   dependencies:
-    - build_image
+    - push_image
   before_script:
     - apt-get update && apt-get install -y gettext
     - echo "$GCP_SA_KEY" | base64 -d > /tmp/account.json
