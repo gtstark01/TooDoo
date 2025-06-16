@@ -6,7 +6,7 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket  = "bigbucketofcrabs99" #Manually provisioned this backend
+    bucket  = "bigbucketofcrabs99"
     prefix  = "terraform/state"
   }
 }
