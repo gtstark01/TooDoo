@@ -1,6 +1,6 @@
 terraform:
   stage: terraform
-  image: cloud-sdk/latest
+  image: google/cloud-sdk:latest
   rules:
     - changes:
         - infra/**/*
