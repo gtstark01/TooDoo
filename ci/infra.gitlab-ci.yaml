@@ -19,16 +19,7 @@ terraform:
     - cd infra
     - terraform init -input=false
     - terraform plan -out=tfplan
-    - terraform apply -auto-approve tfplan 
-
-trigger_app:
-  stage: trigger
-  trigger:
-    include: ci/app.gitlab-ci.yml
-    strategy: depend 
-  rules:
-    - changes:
-        - infra/**/*     
+    - terraform apply -auto-approve tfplan   
 
 destroy:
   stage: destroy
