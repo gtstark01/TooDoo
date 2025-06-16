@@ -32,10 +32,15 @@ trigger_app:
 
 destroy:
   stage: destroy
-  image: cedricguadalupe/terraform-gcloud
+  image: google/cloud-sdk:latest
   when: manual          
   allow_failure: false  
   before_script:
+    - apt-get update && apt-get install -y wget unzip
+    - wget https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.zip
+    - unzip terraform_1.6.6_linux_amd64.zip
+    - mv terraform /usr/local/bin/
+    - terraform -version
     - echo "$GCP_INFRA_KEY" | base64 -d > /tmp/gcp-key.json
     - gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
     - gcloud config set project "$GCP_PROJECT_ID"
