@@ -8,7 +8,7 @@ stages:
   - terraform
   - trigger
   - build
-  - test
   - push
+  - test
   - deploy
   - destroy
