@@ -22,35 +22,35 @@ build_image:
       - $IMAGE_TAR
     expire_in: 1 day
 
-#test_image:
-#     image: docker:24.0.2
-#      services:
-#        - docker:24.0.2-dind
-#      stage: test
-#      dependencies:
-#        - build_image
-#      script:
-#        - docker load -i $IMAGE_TAR
-#       - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
+test_image:
+     image: docker:24.0.2
+      services:
+        - docker:24.0.2-dind
+      stage: test
+      dependencies:
+        - build_image
+      script:
+        - docker load -i $IMAGE_TAR
+        - docker run --rm --entrypoint cat $IMAGE_NAME:latest /app/wizexercise.txt
 
-#push_image:
-#  image: docker:24.0.2
-#  services:
-#    - docker:24.0.2-dind
-#  stage: push
-#  dependencies:
-#    - build_image
-#  script:
-#    - docker load -i $IMAGE_TAR
-#    - docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
-#    - echo "$DOCKERHUB_ACCESS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-#    - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+push_image:
+  image: docker:24.0.2
+  services:
+    - docker:24.0.2-dind
+  stage: push
+  dependencies:
+    - build_image
+  script:
+    - docker load -i $IMAGE_TAR
+    - docker tag $IMAGE_NAME:latest $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
+    - echo "$DOCKERHUB_ACCESS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:latest
 
 deploy:
   stage: deploy
   image: gcr.io/google.com/cloudsdktool/cloud-sdk:latest
-#  dependencies:
-#    - build_image
+  dependencies:
+    - build_image
   before_script:
     - apt-get update && apt-get install -y gettext
     - echo "$GCP_SA_KEY" | base64 -d > /tmp/account.json
