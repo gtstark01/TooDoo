@@ -54,7 +54,7 @@ resource "google_container_cluster" "default" {
   private_cluster_config {
     enable_private_nodes    = true
     enable_private_endpoint = false
-    master_ipv4_cidr_block  = "172.16.0.16/28"  # This CIDR is used for control plane VPC peering
+    master_ipv4_cidr_block  = "172.16.0.16/28"
   }
 
   workload_identity_config {
@@ -157,7 +157,7 @@ resource "google_compute_instance" "vm_instance" {
   network_interface {
     network    = google_compute_network.vm_network.id
     subnetwork = google_compute_subnetwork.vm_subnet.id
-    access_config {}  # Public IP enabled
+    access_config {} 
   }
 
   service_account {
@@ -179,7 +179,7 @@ resource "google_compute_firewall" "allow_gke_to_vm" {
   }
 
   allow {
-    protocol = "icmp"  # Add ICMP protocol to allow ping
+    protocol = "icmp" 
   }
 
   source_ranges = ["10.0.0.0/16", "192.168.4.0/22"]
