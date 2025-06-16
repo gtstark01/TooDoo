@@ -9,5 +9,6 @@ stages:
   - trigger
   - build
   - test
+  - push
   - deploy
   - destroy

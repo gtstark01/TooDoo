@@ -5,6 +5,12 @@ variables:
   DOCKER_USER: $DOCKERHUB_USERNAME
   DOCKER_PASSWORD: $DOCKERHUB_ACCESS
 
+stages:
+  - build
+  - push
+  - test
+  - deploy
+
 build_image:
   image: docker:24.0.2
   services:
@@ -34,7 +40,7 @@ push_image:
   image: docker:24.0.2
   services:
     - docker:24.0.2-dind
-  stage: build
+  stage: push
   dependencies:
     - build_image
   script:
