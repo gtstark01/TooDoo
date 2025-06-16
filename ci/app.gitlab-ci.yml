@@ -62,4 +62,5 @@ deploy:
   script:
     - envsubst < Manifests/taskysecret.yaml.template > Manifests/taskysecret.yaml
     - kubectl apply -f Manifests/
+    - kubectl rollout restart deployment/testy
 
