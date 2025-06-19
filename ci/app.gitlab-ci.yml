@@ -58,7 +58,7 @@ deploy:
     - apt-get update && apt-get install -y gettext
     - echo "$GCP_SA_KEY" | base64 -d > /tmp/account.json
     - gcloud auth activate-service-account --key-file /tmp/account.json
-    - gcloud container clusters get-credentials testbed --zone $GCP_ZONE --project $GCP_PROJECT_ID
+    - gcloud container clusters get-credentials testbed --zone $GCP_ZONE --project $GCP_PROJECT_ID --dns-endpoint
   script:
     - envsubst < Manifests/taskysecret.yaml.template > Manifests/taskysecret.yaml
     - kubectl apply -f Manifests/

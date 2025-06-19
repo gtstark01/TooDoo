@@ -66,14 +66,6 @@ resource "google_container_cluster" "default" {
     cidr_block   = "35.235.240.0/20"
     display_name = "cloud-shell"
   }
-  cidr_blocks {
-   cidr_block   = "72.198.103.130/32"
-   display_name = "home"
- }
-  cidr_blocks {
-    cidr_block = "0.0.0.0/0"
-    display_name = "Allow All Test"
-  }
 }
 }
 
