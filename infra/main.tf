@@ -53,20 +53,13 @@ resource "google_container_cluster" "default" {
 
   private_cluster_config {
     enable_private_nodes    = true
-    enable_private_endpoint = false
+    enable_private_endpoint = true
     master_ipv4_cidr_block  = "172.16.0.16/28"
   }
 
   workload_identity_config {
     workload_pool = "${var.project_id}.svc.id.goog"
   }
-
-  master_authorized_networks_config {
-  cidr_blocks {
-    cidr_block   = "35.235.240.0/20"
-    display_name = "cloud-shell"
-  }
-}
 }
 
 resource "google_compute_router" "router" {
