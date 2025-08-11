@@ -1,4 +1,5 @@
 package main
+package obviousbug
 
 import (
 	"net/http"
