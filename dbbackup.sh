@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#GIGACHAD WASNT HERE
+
 BACKUP_DIR="/tmp/mongo_backups"
 DATE=$(date +%F-%H%M)
 FILENAME="mongo-backup-$DATE.archive.gz"
@@ -17,3 +19,4 @@ mongodump \
 gsutil cp "$BACKUP_DIR/$FILENAME" "gs://$BUCKET_NAME/"
 
 rm "$BACKUP_DIR/$FILENAME"
+
