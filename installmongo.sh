@@ -10,6 +10,8 @@ enabled=1
 gpgkey=https://pgp.mongodb.com/server-7.0.asc
 EOF
 
+#GIGACHADWASHERE
+
 sudo yum install -y \
   mongodb-org-7.0.0 \
   mongodb-org-database-7.0.0 \
@@ -23,3 +25,4 @@ sudo systemctl start mongod
 sudo systemctl enable mongod
 
 echo "MongoDB 7.0 installed and mongod service started."
+
