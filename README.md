@@ -1,3 +1,5 @@
+This repo is an example of how to NOT deploy an application to modern infrastructure? Can you find all the security holes?
+
 # Docker
 A Dockerfile has been provided to run this application.  The default port exposed is 8080.
 
